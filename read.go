@@ -1,6 +1,7 @@
 package main
 
 import (
+	//"github.com/softlandia/cpd"
 	"fmt"
 	"github.com/brutella/can"
 	"github.com/brutella/canopen"
@@ -34,12 +35,23 @@ func ReadFromIndex(idx canopen.ObjectIndex, nodeID uint8, bus *can.Bus) (interfa
 	}
 }
 
+// Parse list of 16bit Unicode characters
 func printableASCIIString(b []byte) string {
+
+	//fmt.Println(cpd.DecodeUTF16le(string(b)))
 	var ascii strings.Builder
-	for _, b := range b {
-		if b >= 32 && b <= 126 || b > 160 {
-			ascii.WriteRune(rune(b))
+	var elem uint16
+	for i, b := range b {
+		if i%2 == 0 {
+			elem = uint16(b)
+			continue
 		}
+		elem = elem | uint16(b)<<8
+		if elem ==0xfffc  {
+			// Skip strange control characters
+			continue
+		}
+		ascii.WriteRune(rune(elem))
 	}
 
 	return ascii.String()

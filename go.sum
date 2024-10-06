@@ -5,5 +5,9 @@ github.com/brutella/canopen v0.0.2 h1:mngNlp+PsdqGnvhSijl3DvbPN0hj1UYB9nJaOcqCsK
 github.com/brutella/canopen v0.0.2/go.mod h1:luvMkb19ODa+w0u3mErCE78yAg9YIVk0ofMgDEng1mQ=
 github.com/brutella/uvr v0.0.1 h1:HHB7o2mHuj17AkdkY1GascnV7a6qzUigsOb9fXIeEQ4=
 github.com/brutella/uvr v0.0.1/go.mod h1:bmpaOC+0/G+VgUiPywOBxidXJav/91GNG8GgtxlZT0Y=
+github.com/softlandia/cpd v1.0.0 h1:qSo+w5eGza466YoM3l/fmqAbZIeN7h6NnPgLRx35xAM=
+github.com/softlandia/cpd v1.0.0/go.mod h1:LcHy4FZYolw1FpyNAiwI1dblei1AGBBF2FpD1+L9Iqg=
 golang.org/x/sys v0.0.0-20181213200352-4d1cda033e06 h1:0oC8rFnE+74kEmuHZ46F6KHsMr5Gx2gUQPuNz28iQZM=
 golang.org/x/sys v0.0.0-20181213200352-4d1cda033e06/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
+golang.org/x/text v0.3.7 h1:olpwvP2KacW1ZWvsR7uQhoyTYvKAupfQrRGBFM352Gk=
+golang.org/x/text v0.3.7/go.mod h1:u+2+/6zg+i71rQMx5EYifcz6MCKuco9NR6JIITiCfzQ=
