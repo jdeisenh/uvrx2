@@ -11,16 +11,84 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-const prefix = "uvr2"
+const prefix = "uvrx2"
 
-var listof = []struct {
+type al struct {
 	name string
-	desc string
 	Idx  uint16
 	Sub  uint8
+}
+
+var listof = []struct {
+	name  string
+	desc  string
+	param string
+	atrl  []al
 }{
-	{"input_brenner_temp", "Temperatur Brenner Vorlauf", 8272, 0},
-	{"input_aussen_temp", "Temperatur Aussen", 8272, 1},
+	{
+		"input_temp",
+		"Temperatur Brenner Vorlauf",
+		"sensor",
+		[]al{
+			{"Brenner VL", 8272, 0},
+			{"Aussen", 8272, 1},
+			{"HK 1", 8272, 2},
+			{"HK 2", 8272, 3},
+			{"HK 3", 8272, 4},
+		},
+	},
+	{
+		"mischer_pct",
+		"Mischer Öffnung",
+		"heizkreis",
+		[]al{
+			{"Büro", 11529,2},
+			{"Werkstatt", 11529, 4},
+			{"Fussbodenhzg", 11529, 3},
+		},
+	},
+	{
+		"vorlaufsoll_temp",
+		"Vorlauf Solltemperatur",
+		"heizkreis",
+		[]al{
+			{"Büro", 11521,2},
+			{"Werkstatt", 11521, 4},
+			{"Fussbodenhzg", 11521, 3},
+		},
+	},
+	{
+		"brenner_temp",
+		"Brenner Temperatur",
+		"typ",
+		[]al{
+			{"Ist", 11019,5},
+			{"Soll", 11031, 5},
+			{"Aktiv", 11521, 5},
+		},
+	},
+	{
+		"ausgang_aktiv",
+		"Ausgang",
+		"art",
+		[]al{
+			{"Brenner", 8400, 5},
+			{"Pumpe 1", 8400, 4},
+			{"Pumpe 2", 8400, 3},
+			{"Pumpe 3", 8400, 2},
+		},
+	},
+	{
+		"ausgang_laufzeit",
+		"Ausgang Einschaltzeit",
+		"art",
+		[]al{
+			{"Brenner", 8402, 5},
+			{"Pumpe 1", 8402, 4},
+			{"Pumpe 2", 8402, 3},
+			{"Pumpe 3", 8402, 2},
+		},
+	},
 }
 
 // Implements prometheus.Collector
@@ -32,13 +100,16 @@ type CustomCollector struct {
 func (cm *CustomCollector) Collect(ch chan<- prometheus.Metric) {
 
 	for k, x := range listof {
-		value, e := uvrx2.NewElement(cm.client, x.Idx, x.Sub).Read()
-		if e != nil {
-			ch <- prometheus.MustNewConstMetric(
-				cm.desc[k],
-				prometheus.GaugeValue,
-				value.Float64(),
-			)
+		for _, z := range x.atrl {
+			value, e := uvrx2.NewElement(cm.client, z.Idx, z.Sub).Read()
+			if e == nil {
+				ch <- prometheus.MustNewConstMetric(
+					cm.desc[k],
+					prometheus.GaugeValue,
+					value.Float64(),
+					z.name,
+				)
+			}
 		}
 	}
 }
@@ -51,7 +122,7 @@ func NewCustomCollector(client *uvrx2.Client) *CustomCollector {
 
 	var list []*prometheus.Desc
 	for _, x := range listof {
-		list = append(list, prometheus.NewDesc(prefix+"_"+x.name, x.desc, nil, nil))
+		list = append(list, prometheus.NewDesc(prefix+"_"+x.name, x.desc, []string{x.param}, nil))
 	}
 	res := &CustomCollector{
 		client: client,

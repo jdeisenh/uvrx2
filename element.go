@@ -39,4 +39,3 @@ func Readbuf(idx canopen.ObjectIndex, nodeID uint8, bus *can.Bus) ([]byte, error
 	}
 	return b, nil
 }
-
