@@ -2,6 +2,7 @@ package uvrx2
 
 import (
 	"fmt"
+	"strings"
 )
 
 type Cell []byte
@@ -86,4 +87,38 @@ func (b Cell) String() string {
 	default:
 		return fmt.Sprintf("%X %v", b[0], b[1:])
 	}
+}
+
+// Parse list of 16bit Unicode characters
+func printableASCIIString(b []byte) string {
+
+	//fmt.Println(cpd.DecodeUTF16le(string(b)))
+	var ascii strings.Builder
+	var elem uint16
+	for i, b := range b {
+		if i%2 == 0 {
+			elem = uint16(b)
+			continue
+		}
+		elem = elem | uint16(b)<<8
+		if elem == 0xfffc {
+			// Skip strange control characters
+			continue
+		}
+		ascii.WriteRune(rune(elem))
+	}
+
+	return ascii.String()
+}
+
+func parseInt(b []byte) int32 {
+	r := int32(0)
+	for i := len(b) - 1; i >= 0; i-- {
+		r = r * 256
+		r += int32(b[i])
+	}
+	return r
+}
+func parseInt32(b []byte) int32 {
+	return (int32(b[3]) << 24) + (int32(b[2]) << 16) + (int32(b[1]) << 8) + int32(b[0])
 }

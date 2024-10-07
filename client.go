@@ -28,10 +28,6 @@ func (c *Client) Disconnect(id uint8) error {
 	return uvr.Disconnect(id, c.id, c.bus)
 }
 
-func (c *Client) Read(i canopen.ObjectIndex) (interface{}, error) {
-	return ReadFromIndex(i, c.id, c.bus)
-}
-
 func (c *Client) Write(b []byte, i canopen.ObjectIndex) error {
 	return uvr.WriteToIndex(i, b, c.id, c.bus)
 }
