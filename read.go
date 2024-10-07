@@ -1,12 +1,12 @@
-package main
+package uvrx2
 
 import (
-	//"github.com/softlandia/cpd"
 	"fmt"
+	"strings"
+
 	"github.com/brutella/can"
 	"github.com/brutella/canopen"
 	"github.com/brutella/canopen/sdo"
-	"strings"
 )
 
 func ReadFromIndex(idx canopen.ObjectIndex, nodeID uint8, bus *can.Bus) (interface{}, error) {
@@ -47,7 +47,7 @@ func printableASCIIString(b []byte) string {
 			continue
 		}
 		elem = elem | uint16(b)<<8
-		if elem ==0xfffc  {
+		if elem == 0xfffc {
 			// Skip strange control characters
 			continue
 		}

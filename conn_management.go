@@ -1,10 +1,11 @@
-package main
+package uvrx2
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/brutella/can"
 	"github.com/brutella/canopen"
-	"time"
 )
 
 func Disconnect(serverID uint8, clientID uint8, bus *can.Bus) error {

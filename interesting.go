@@ -1,5 +1,4 @@
-package main
-
+package uvrx2
 
 type descriptor struct {
 	name    string
@@ -112,4 +111,3 @@ var interestingdata = []struct {
 		},
 	},
 }
-

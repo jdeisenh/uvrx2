@@ -1,4 +1,4 @@
-package main
+package uvrx2
 
 const (
 	TPDODigitalVariables     uint16 = 0x180

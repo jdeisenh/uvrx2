@@ -1,4 +1,4 @@
-package main
+package uvrx2
 
 import (
 	"github.com/brutella/can"

@@ -1,9 +1,10 @@
-package main
+package uvrx2
 
 import (
+	"time"
+
 	"github.com/brutella/can"
 	"github.com/brutella/canopen"
-	"time"
 )
 
 type Client struct {

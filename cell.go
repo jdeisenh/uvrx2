@@ -1,7 +1,7 @@
-package main
+package uvrx2
 
 import (
-"fmt"
+	"fmt"
 )
 
 type Cell []byte
