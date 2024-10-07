@@ -6,6 +6,7 @@ import (
 	"github.com/brutella/can"
 	"github.com/brutella/canopen"
 	"github.com/brutella/canopen/sdo"
+	"github.com/brutella/uvr"
 )
 
 type Element struct {
@@ -29,8 +30,8 @@ func (el *Element) Read() (Cell, error) {
 func Readbuf(idx canopen.ObjectIndex, nodeID uint8, bus *can.Bus) ([]byte, error) {
 	upload := sdo.Upload{
 		ObjectIndex:   idx,
-		RequestCobID:  uint16(SSDOClientToServer2) + uint16(nodeID),
-		ResponseCobID: uint16(SSDOServerToClient2) + uint16(nodeID),
+		RequestCobID:  uint16(uvr.SSDOClientToServer2) + uint16(nodeID),
+		ResponseCobID: uint16(uvr.SSDOServerToClient2) + uint16(nodeID),
 	}
 
 	b, err := upload.Do(bus)
