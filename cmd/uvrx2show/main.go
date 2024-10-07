@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"log"
+	"fmt"
 
 	"github.com/brutella/can"
 
@@ -33,8 +34,33 @@ func main() {
 	c := uvrx2.NewClient(nodeID, bus)
 	c.Connect(uvrID)
 
-	uvrx2.Show(c)
+	Show(c)
 
 	c.Disconnect(uvrID)
 	bus.Disconnect()
 }
+
+// Show dumps values for 'interesting" data
+func Show(c *uvrx2.Client) {
+
+        for _, device := range uvrx2.Interestingdata {
+                fmt.Printf("Device: %s\n", device.Device)
+                for _, m := range device.Descriptors {
+
+                        name := m.Name
+                        if m.Getname {
+                                n, e := uvrx2.NewElement(c, m.Idx+4096, m.Sub).Read()
+                                if e == nil {
+                                        name = n.String()
+                                }
+                        }
+                        got, e := uvrx2.NewElement(c, m.Idx, m.Sub).Read()
+                        if e == nil {
+                                fmt.Printf("\t%-30.30s: %s\n", name, got)
+                        }
+                }
+        }
+}
+
+
+

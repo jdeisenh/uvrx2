@@ -1,8 +1,6 @@
 package uvrx2
 
 import (
-	"fmt"
-
 	"github.com/brutella/can"
 	"github.com/brutella/canopen"
 	"github.com/brutella/canopen/sdo"
@@ -42,24 +40,3 @@ func Readbuf(idx canopen.ObjectIndex, nodeID uint8, bus *can.Bus) ([]byte, error
 	return b, nil
 }
 
-// Show dumps values for 'interesting" data
-func Show(c *Client) {
-
-	for _, device := range interestingdata {
-		fmt.Printf("Device: %s\n", device.device)
-		for _, m := range device.descriptors {
-
-			name := m.name
-			if m.getname {
-				n, e := NewElement(c, m.idx+4096, m.sub).Read()
-				if e == nil {
-					name = n.String()
-				}
-			}
-			got, e := NewElement(c, m.idx, m.sub).Read()
-			if e == nil {
-				fmt.Printf("\t%-30.30s: %s\n", name, got)
-			}
-		}
-	}
-}

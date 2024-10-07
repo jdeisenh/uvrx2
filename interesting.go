@@ -1,15 +1,15 @@
 package uvrx2
 
 type descriptor struct {
-	name    string
-	idx     uint16
-	sub     uint8
-	getname bool
+	Name    string
+	Idx     uint16
+	Sub     uint8
+	Getname bool
 }
 
-var interestingdata = []struct {
-	device      string
-	descriptors []descriptor
+var Interestingdata = []struct {
+	Device      string
+	Descriptors []descriptor
 }{
 	{
 		"HKR #1 Büro",
