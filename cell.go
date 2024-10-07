@@ -3,9 +3,20 @@ package uvrx2
 import (
 	"fmt"
 	"strings"
+
+	log "github.com/sirupsen/logrus"
 )
 
 type Cell []byte
+
+func scaleInt(mode byte, val int32) float64 {
+	switch mode {
+	case 1, 7, 8:
+		return float64(val) / 10
+	default:
+		return float64(val)
+	}
+}
 
 func printNumberType(sort byte, val int32) string {
 	switch sort {
@@ -89,6 +100,21 @@ func (b Cell) String() string {
 	}
 }
 
+// First byte represents the tpe
+func (b Cell) TypeCode() byte {
+	return b[0]
+}
+
+func (b Cell) Float64() float64 {
+	switch b.TypeCode() {
+	case 0xd0, 0x50, 0xc0, 0xb0:
+		return scaleInt(b[1], parseInt(b[2:]))
+	default:
+		log.Warnf("Not convertable to double")
+		return 0.0
+	}
+}
+
 // Parse list of 16bit Unicode characters
 func printableASCIIString(b []byte) string {
 
@@ -119,6 +145,7 @@ func parseInt(b []byte) int32 {
 	}
 	return r
 }
+
 func parseInt32(b []byte) int32 {
 	return (int32(b[3]) << 24) + (int32(b[2]) << 16) + (int32(b[1]) << 8) + int32(b[0])
 }
