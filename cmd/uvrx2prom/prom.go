@@ -58,6 +58,16 @@ var listof = []struct {
 		},
 	},
 	{
+		"vorlauf_ist_temp",
+		"Vorlauf Istemperatur",
+		"heizkreis",
+		[]al{
+			{"Büro", 11043,2},
+			{"Werkstatt", 11043, 4},
+			{"Fussbodenhzg", 11043, 3},
+		},
+	},
+	{
 		"brenner_temp",
 		"Brenner Temperatur",
 		"typ",
