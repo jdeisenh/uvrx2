@@ -42,7 +42,7 @@ var listof = []struct {
 		"Mischer Öffnung",
 		"heizkreis",
 		[]al{
-			{"Büro", 11529,2},
+			{"Büro", 11529, 2},
 			{"Werkstatt", 11529, 4},
 			{"Fussbodenhzg", 11529, 3},
 		},
@@ -52,7 +52,7 @@ var listof = []struct {
 		"Vorlauf Solltemperatur",
 		"heizkreis",
 		[]al{
-			{"Büro", 11521,2},
+			{"Büro", 11521, 2},
 			{"Werkstatt", 11521, 4},
 			{"Fussbodenhzg", 11521, 3},
 		},
@@ -62,7 +62,7 @@ var listof = []struct {
 		"Vorlauf Istemperatur",
 		"heizkreis",
 		[]al{
-			{"Büro", 11043,2},
+			{"Büro", 11043, 2},
 			{"Werkstatt", 11043, 4},
 			{"Fussbodenhzg", 11043, 3},
 		},
@@ -72,7 +72,7 @@ var listof = []struct {
 		"Brenner Temperatur",
 		"typ",
 		[]al{
-			{"Ist", 11019,5},
+			{"Ist", 11019, 5},
 			{"Soll", 11031, 5},
 			{"Aktiv", 11521, 5},
 		},
@@ -109,6 +109,7 @@ type CustomCollector struct {
 
 func (cm *CustomCollector) Collect(ch chan<- prometheus.Metric) {
 
+	errcount := 0
 	for k, x := range listof {
 		for _, z := range x.atrl {
 			value, e := uvrx2.NewElement(cm.client, z.Idx, z.Sub).Read()
@@ -119,6 +120,11 @@ func (cm *CustomCollector) Collect(ch chan<- prometheus.Metric) {
 					value.Float64(),
 					z.name,
 				)
+			} else {
+				errcount++
+				if errcount > 10 {
+					log.Fatal("Read errors, exiting")
+				}
 			}
 		}
 	}
