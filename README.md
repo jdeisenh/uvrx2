@@ -39,6 +39,72 @@ Ich verwende
 
 Getestet ausschliesslich mit UVR 1610K. UVR16x2 sollte kompatibel sein, getestet wurde das jedoch nicht.
 
+## Teaser
+![Grafana](grafana.png)
+
+```
+Device: HKR #1 Büro
+	Betrieb                      : Zeit/Auto
+	Betriebsart                  : Abgesenkt
+	Vorlaufsolltemperatur        : 29.8 °C
+	Vorlauftemperatur            : 26.7 °C
+	Mischer 0 - 100%             : 14.3 %
+	T.Raum Absenk                : 16 °C
+	T.Raum Normal                : 20 °C
+	Heizkurve Niveau             : 0 K
+Device: HKR #2 Fussboden
+	Betrieb                      : Standby/Frostschutz (#3)
+	Betriebsart                  : Standby
+	Vorlaufsolltemperatur        : 5 °C
+	Vorlauftemperatur            : 26.9 °C
+	Mischer 0 - 100%             : 0 %
+	T.Raum Absenk                : 16 °C
+	T.Raum Normal                : 20 °C
+	Heizkurve Niveau             : 0 K
+Device: HKR #3 Werkstatt
+	Betrieb                      : Standby/Frostschutz (#3)
+	Betriebsart                  : Standby
+	Vorlaufsolltemperatur        : 5 °C
+	Vorlauftemperatur            : 29.9 °C
+	T.Raum Absenk                : 16 °C
+	T.Raum Normal                : 20 °C
+	Heizkurve Niveau             : 0 K
+Device: Anforderung Heizung
+	Anforderungstemp.            : 40.2 °C
+	Solltemperatur Anforderung   : 29.8 °C
+	Anforderung                  : Aus
+Device: Eingänge
+	T. Kessel VL                  : 40.2 °C
+	T. Aussen                     : 7.2 °C
+	T. HK VL 1                    : 26.7 °C
+	T. HK VL 2                    : 26.9 °C
+	T. HK VL 3                    : 29.9 °C
+Device: Mischer 1
+	Laufzeit                     : 00:02:05
+Device: Pumpe #1
+	Ausgangsstatus               : Ein
+	Betriebsstunden              : 556:26:10
+Device: Pumpe #2
+	Ausgangsstatus               : Aus
+	Betriebsstunden              : 48:11:57
+Device: Pumpe #3
+	Ausgangsstatus               : Aus
+	Betriebsstunden              : 97:51:55
+Device: Brenner
+	Ausgangsstatus               : Aus
+	Betriebsstunden              : 250:17:33
+Device: Zeitprogramm
+	Beginn                       : 07:40
+	Ende                         : 17:00
+Device: System
+	Reglerstart                   : Aus
+	Sensorfehler Eingang          : Nein
+	Meldung                       : Aus
+	Warnung                       : Aus
+	Störung                       : Aus
+	Fehler                        : Nein
+```
+
 ## TODO
 
 ### Schreibzugriff
