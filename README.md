@@ -1,39 +1,52 @@
-Experimentelle Abfrage einer UVR Generation X2 Heizungsstuerung.
+# UVRX2
 
-Disclaimer:
-Diese Software ist kein Produkt der Firma Technische Alternative und hat keinerlei Freigabe oder Unterstützung dieser Firma. 
-Diese Software dient Lernzwecken. Sie kann Schäden an ihrer Heizunganlage und in Folge darüber hinaus verursachen, für die niemand, insbesondere nicht ich, haften wird. Die Gefahr beim reinen Auslesen halten ich allerdings für gering. 
+## Prometheus-Exporter für Sensorwerten aus TA UVR x2 Heizungssteuerungen über CAN-Bus
 
+### Zweck
 
-Basiert auf can/canopen library from 
-
-Mit dieser Software können Mess- un Konfigurationswerte aus einer UVR X2 Heizungssteuerung der 
-Firma Technische Alternative direkt über CAN ausgelesen werden.
+Mit dieser Software können Sensor- und Konfigurationswerte aus einer UVRx2 Heizungssteuerung der 
+Firma Technische Alternative direkt über einen CAN-Bus ausgelesen werden.
 Dafür ist entsprechende CAN-Hardware nötig, die sehr preisgünstig erhältlich ist. 
 Ein CMI-Modul ist dafür nicht notwendig. 
 
-Funktionalität:
+### Disclaimer
+
+Disclaimer:
+Diese Software ist kein Produkt der Firma "Technische Alternative" und hat keinerlei Freigabe oder Unterstützung dieser Firma. 
+Diese Software dient Lernzwecken. Sie kann Schäden an ihrer Heizunganlage und in Folge darüber hinaus verursachen, für die niemand, insbesondere nicht ich, haften wird. Die Gefahr beim reinen Auslesen von Sensorwerten halte ich jedoch für gering. In meinen Experimenten, auch mit unfertigen Softwareständen, gab es nie irgendwelche Rückwirking auf die Funktion der Heizungssteuerung selbst. Ausschliessen kann ich das jedoch nicht.
+
+### Basis
+
+Basiert auf can/canopen library from Matthias Hochgatterer 
+https://github.com/brutella/canopen
+https://github.com/brutella/can
+https://github.com/brutella/uvr
+
+## Funktionalität:
 Auslesen aller Mess- und Konfigurationswerte, die auch per CMI erreichbar sind.
 Export nach prometheus, zur Überwachung und Visualisierung z.B. mittels grafana
 
-Ein Wort vorneweg: Da es sich hier um Universal-Regler handelt, hängt die Interpretation 
-der ausgelesenen Werte von der Programmierung ab. Die Werte aus der Programmierung muss von Hand übertragen werden. Wer es einfach und zuverlässig haben will, kauft weiterhin am besten das CMI-Modul
+Da es sich hier um Universal-Regler handelt, hängt die Interpretation der ausgelesenen Werte von der Programmierung ab. Die Werte aus der Programmierung muss von Hand übertragen werden. Das ist aktuell relativ fummelig. Wer es einfacher und zuverlässiger haben will, kauft am Besten das kommerzielle CMI-Modul.
 
-Hardware: 
+## Hardware: 
 Ich verwende
-- Rasperry Zero W2
-- waveshare CAN-Hat
-- DC/DC Wandler zur Stromversorgung des Raspi direkt aus der UVR
-- Gehäuse, in die alle drei Komponenten eingebaut werden können
+- Rasperry Pi Zero W2, ca €20
+- Waveshare CAN-Hat, ca €10
+- DC/DC Wandler zur Stromversorgung des Raspi direkt aus der UVR, ca €5
+- Gehäuse, in die alle drei Komponenten nach Anpassung eingebaut werden können €5
 
-Unterstützte Geräte:
-Getestet ausschliesslich mit UVR 1610. Die Geräte aus derselben Generation ... sollten jedoch sehr ähnlich funktioieren. 
+## Unterstützte Steuerungen: 
 
-TODO:
-Schreibzugriff
+Getestet ausschliesslich mit UVR 1610K. UVR16x2 sollte kompatibel sein, getestet wurde das jedoch nicht.
 
-Das Format der Schreibzugriffe an die Steuerung konnte ich bisher nicht reverse-engineeren. Dazu wäre ein Belauschen des CAN-Busses während Schreibzugriffe notwendig.
+## TODO
+
+### Schreibzugriff
+
+Das Format der Schreibzugriffe an die Steuerung konnte ich bisher nicht reverse-engineeren. In älteren Versionen muss das Kommando ein Schlüsselwort enthalten, welches hauptsächlich irrtümliches und zufälliges schreiben verhindern soll. Vermutlich ist das auch weiterhin so ähnlich gelöst, die Details kenne ich jedoch mangels Dokumentation nicht. Dazu wäre ein Belauschen des CAN-Busses während Schreibzugriffe notwendig.
 Ich wäre froh, wenn dies jemand für mich erledigen könnte, oder mir für eine begrenzte Zeit ein CMI-Modul zur Verfüngung stellt. 
 
-MQTT Unterstützung zum Setzen des Betriebsmodus
+### MQTT Unterstützung 
+
+Lesend/Schreibend
 
